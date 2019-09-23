@@ -75,6 +75,85 @@ p_title <- ggdraw() +
 plot_grid(p_title, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
 
 
+# Backtesting strategy ----------------------------------------------------
+
+# XJO data goes back to 2000.
+# Let's use 2009 - 2019, 10 years of data, and post-GFC
+# Use 2009 - 2018 for the training set, and 1 year for the test set
+# 
+
+periods_train <- 8 * 252 # 8 years of 252 trading days
+periods_test  <- 2 * 252 # 2 years of 252 trading days for testing
+skip_span     <- 3 * 252 - 1
+
+# xjo <- xjo[1:(252*10), ]
+
+rolling_origin_resamples <- rolling_origin(
+  data       = xjo,
+  initial    = periods_train,
+  assess     = periods_test,
+  cumulative = FALSE,
+  skip       = skip_span
+)
+
+rolling_origin_resamples
+
+# Visualise backtesting strategy
+
+plot_split <- function(split, expand_y_axis = TRUE,
+                       alpha = 1, size = 1, base_size = 14) {
+  # Manipulate data
+  train_tbl <- training(split) %>%
+    add_column(key = "training") 
+  
+  test_tbl  <- testing(split) %>%
+    add_column(key = "testing") 
+  
+  data_manipulated <- bind_rows(train_tbl, test_tbl) %>%
+    as_tbl_time(index = index) %>%
+    mutate(key = fct_relevel(key, "training", "testing"))
+  
+  # Collect attributes
+  train_time_summary <- train_tbl %>%
+    tk_index() %>%
+    tk_get_timeseries_summary()
+  
+  test_time_summary <- test_tbl %>%
+    tk_index() %>%
+    tk_get_timeseries_summary()
+  
+  # Visualize
+  g <- data_manipulated %>%
+    ggplot(aes(x = index, y = value, color = key)) +
+    geom_line(size = size, alpha = alpha) +
+    theme_tq(base_size = base_size) +
+    scale_color_tq() +
+    labs(
+      title    = glue("Split: {split$id}"),
+      subtitle = glue("{train_time_summary$start} to ", 
+                      "{test_time_summary$end}"),
+      y = "", x = ""
+    ) +
+    theme(legend.position = "none") 
+  
+  if (expand_y_axis) {
+    
+    sun_spots_time_summary <- sun_spots %>% 
+      tk_index() %>% 
+      tk_get_timeseries_summary()
+    
+    g <- g +
+      scale_x_date(limits = c(sun_spots_time_summary$start, 
+                              sun_spots_time_summary$end))
+  }
+  
+  g
+}
+
+rolling_origin_resamples$splits[[1]] %>%
+  plot_split(expand_y_axis = TRUE) +
+  theme(legend.position = "bottom")
+
 # Data generator function -------------------------------------------------
 
 # A function that you call repeatedly to obtain a sequence of values from.

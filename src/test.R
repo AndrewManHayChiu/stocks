@@ -1,4 +1,5 @@
 library(httr)
+library(dplyr)
 library(ggplot2)
 
 
@@ -19,11 +20,11 @@ announcements <- data.frame(stock = c("tgo", "twd", "emr", "pyc", "s2r", "ara",
 
 get_stock_hist <- function(stock, outputsize = "full") {
   
-  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ASX:"
+  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
   
   call <- paste0(base, 
                  stock, 
-                 "&outputsize=", outputsize,
+                 # "&outputsize=", outputsize,
                  "&datatype=", "csv",
                  "&apikey=", "THQF7WMIM25XDVCP")
   
@@ -62,6 +63,8 @@ get_and_plot <- function(stock, outputsize = "full") {
 
 
 # -------------------------------------------------------------------------
+
+get_stock_hist("xao")
 
 get_and_plot("xao")
 

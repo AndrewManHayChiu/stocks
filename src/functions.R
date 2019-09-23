@@ -16,8 +16,8 @@ get_stock_hist <- function(stock, outputsize = "full") {
   # Returns:
   #   A data frame of stock data
   
-  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ASX:"
-    call <- paste0(base, 
+  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
+  call <- paste0(base, 
                  stock, 
                  "&outputsize=", outputsize,
                  "&datatype=", "csv",
@@ -49,4 +49,9 @@ plot_stock <- function(data.frame, ticker) {
     labs(title = toupper(ticker),
          x = "",
          y = "Close")
+}
+
+get_and_plot <- function(stock, outputsize = "full") {
+  df <- get_stock_hist(stock)
+  plot_stock(df, stock)
 }
