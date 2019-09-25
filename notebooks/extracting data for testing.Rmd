@@ -7,3 +7,81 @@ output: html_notebook
 
 ## Information
 
+There are two ways to test trading strategies:
+
+1. Paper trade
+2. Backtest
+
+Both methods should be adopted to verify trading strategies.
+
+In order to conduct backtesting, data needs to be downloaded.
+
+**The purpose of this notebook is to download historical stock data**
+
+I signed up to [ALPHA VANTAGE](https://www.alphavantage.co/), 
+a site that provides *realtime* and *historical* stock data.
+They also provide FX and crypto feeds. 
+
+Data can be accessed via API calls.
+
+Access to data is also free!
+
+## Load function
+
+To extract data, an API call must be made according to ALPHA VANTAGE's 
+documentation.
+
+I've written a function that wraps the call arguments to extract data. 
+
+Load the function/s using the following script.
+
+```{r load_functions}
+source("../src/functions.R")
+```
+
+## Extract stock data
+
+Test the function works by providing it a ticker: **ASX:APT (Afterpay)** 
+(It happens to be the top stock today in terms of % gain).
+
+```{r get_stock_data}
+apt <- get_stock_hist("ASX:APT")
+```
+
+By default, the function downloads the full history.
+
+Below are the first few rows of the data.
+
+It contains the standard fields:
+
+* timestamp
+* open
+* high
+* low
+* close
+* volume
+
+```{r}
+head(apt)
+```
+
+So the function works.
+
+The next step is to download a host of stocks.
+
+## Write data to csv
+
+Finally, save each stock data as one CSV file.
+
+One big CSV file makes it easier to save and load with minimal code.
+
+If you prefer individual CSV files, contact me.
+
+**NOTE: data is not commited to GitHub.**
+
+```{r write_to_csv}
+stocks <- rbind(apt)
+
+readr::write_csv(stocks, "../data/stocks.csv")
+```
+

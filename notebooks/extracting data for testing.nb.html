@@ -1755,10 +1755,74 @@ summary {
 <!-- rnb-text-begin -->
 <div id="information" class="section level2">
 <h2>Information</h2>
+<p>There are two ways to test trading strategies:</p>
+<ol style="list-style-type: decimal">
+<li>Paper trade</li>
+<li>Backtest</li>
+</ol>
+<p>Both methods should be adopted to verify trading strategies.</p>
+<p>In order to conduct backtesting, data needs to be downloaded.</p>
+<p><strong>The purpose of this notebook is to download historical stock data</strong></p>
+<p>I signed up to <a href="https://www.alphavantage.co/">ALPHA VANTAGE</a>, a site that provides <em>realtime</em> and <em>historical</em> stock data. They also provide FX and crypto feeds.</p>
+<p>Data can be accessed via API calls.</p>
+<p>Access to data is also free!</p>
+</div>
+<div id="load-function" class="section level2">
+<h2>Load function</h2>
+<p>To extract data, an API call must be made according to ALPHA VANTAGE’s documentation.</p>
+<p>I’ve written a function that wraps the call arguments to extract data.</p>
+<p>Load the function/s using the following script.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="extract-stock-data" class="section level2">
+<h2>Extract stock data</h2>
+<p>Test the function works by providing it a ticker: <strong>ASX:APT (Afterpay)</strong> (It happens to be the top stock today in terms of % gain).</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>By default, the function downloads the full history.</p>
+<p>Below are the first few rows of the data.</p>
+<p>It contains the standard fields:</p>
+<ul>
+<li>timestamp</li>
+<li>open</li>
+<li>high</li>
+<li>low</li>
+<li>close</li>
+<li>volume</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NiwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVN2MHZEUUJRK2t6VFNRRlhRcFlPdDRLQ0xHWFNXdktxZ3E3bzR1SncxYllOSkxpU3Bpb01VUVFjUi9DTlVYTVM1NEE4RWNkT2hrNE1nT0R0M3JkN2w3b3pOZzd2MzNuZnZ2ZS9ldTF0YjJwZzFOZ3lFa0lKVVRVT0tTazFOb2RzQTBsQ2U2WDJFMUZGcTZGUVBNUTJkQjhRRU92ZFBRcmU0dmhQK25mUWhDZXd2bUt1Nk9JcW9NZklQMUpad2JGUGRvNHVUd00wcmxUZUE4ZURpM1pnSGVHeXZmaCtYQVk3T042ZTd6d0J6aVlEMXRYdzdkdkQxbDdld3puR29KSGlhMXhIK29mQ3J0R3B3bWZMVjJmRUtXR2VjMTJKaHBUWkFKT3BOaWZNbkpFVHdjUWVzbHhMTFNPOTdVbU1DWUF0OFV2SVZrbUhDNENLYXVIcEY1WTh5cW56ZW82SjVqWXJkMCt5d2ZPelpjbGk2QVBPeFE4RVllNEdjSGdsc1g5b05wOTRRdHVxU3ZYVHFKTEtGbys4U3QrblpHYTU4U1BaTXljY3VxYlI0YnpvUFZINHlqMlpzNHhpYnRSQjc0dW42eWcyU0lIYUlUNHNwN1B2a01za0RZUVlZYnZxTWZIdW0ybWo2T3pPempDQTU1cXNndE41dk0wcFZYaXduKzdQOXV1UExibk11M3JKZDRRelJKcE1lelNCMC9GaDJRdEhJakVtTVpaeFJKYTVFK0xmcy9RSjNKbXd4TEFNQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["timestamp"],"name":[1],"type":["date"],"align":["right"]},{"label":["open"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["high"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["low"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["close"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["volume"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"2019-09-25","2":"33.35","3":"36.650","4":"32.81","5":"36.00","6":"4196163","_rn_":"1"},{"1":"2019-09-24","2":"32.23","3":"32.510","4":"31.55","5":"31.77","6":"2139596","_rn_":"2"},{"1":"2019-09-23","2":"33.49","3":"33.490","4":"31.72","5":"32.23","6":"2087711","_rn_":"3"},{"1":"2019-09-20","2":"33.02","3":"33.635","4":"32.90","5":"33.05","6":"4316860","_rn_":"4"},{"1":"2019-09-19","2":"32.40","3":"32.990","4":"32.31","5":"32.79","6":"1650343","_rn_":"5"},{"1":"2019-09-18","2":"31.88","3":"32.780","4":"31.75","5":"32.28","6":"1701258","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>So the function works.</p>
+<p>The next step is to download a host of stocks.</p>
+</div>
+<div id="write-data-to-csv" class="section level2">
+<h2>Write data to csv</h2>
+<p>Finally, save each stock data as one CSV file.</p>
+<p>One big CSV file makes it easier to save and load with minimal code.</p>
+<p>If you prefer individual CSV files, contact me.</p>
+<p><strong>NOTE: data is not commited to GitHub.</strong></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXh0cmFjdGluZyBkYXRhIGZvciB0ZXN0aW5nIgphdXRob3I6ICJBbmRyZXcgQ2hpdSIKZGF0ZTogMjAxOS0wOS0yNQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBJbmZvcm1hdGlvbgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXh0cmFjdGluZyBkYXRhIGZvciB0ZXN0aW5nIgphdXRob3I6ICJBbmRyZXcgQ2hpdSIKZGF0ZTogMjAxOS0wOS0yNQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBJbmZvcm1hdGlvbgoKVGhlcmUgYXJlIHR3byB3YXlzIHRvIHRlc3QgdHJhZGluZyBzdHJhdGVnaWVzOgoKMS4gUGFwZXIgdHJhZGUKMi4gQmFja3Rlc3QKCkJvdGggbWV0aG9kcyBzaG91bGQgYmUgYWRvcHRlZCB0byB2ZXJpZnkgdHJhZGluZyBzdHJhdGVnaWVzLgoKSW4gb3JkZXIgdG8gY29uZHVjdCBiYWNrdGVzdGluZywgZGF0YSBuZWVkcyB0byBiZSBkb3dubG9hZGVkLgoKKipUaGUgcHVycG9zZSBvZiB0aGlzIG5vdGVib29rIGlzIHRvIGRvd25sb2FkIGhpc3RvcmljYWwgc3RvY2sgZGF0YSoqCgpJIHNpZ25lZCB1cCB0byBbQUxQSEEgVkFOVEFHRV0oaHR0cHM6Ly93d3cuYWxwaGF2YW50YWdlLmNvLyksIAphIHNpdGUgdGhhdCBwcm92aWRlcyAqcmVhbHRpbWUqIGFuZCAqaGlzdG9yaWNhbCogc3RvY2sgZGF0YS4KVGhleSBhbHNvIHByb3ZpZGUgRlggYW5kIGNyeXB0byBmZWVkcy4gCgpEYXRhIGNhbiBiZSBhY2Nlc3NlZCB2aWEgQVBJIGNhbGxzLgoKQWNjZXNzIHRvIGRhdGEgaXMgYWxzbyBmcmVlIQoKIyMgTG9hZCBmdW5jdGlvbgoKVG8gZXh0cmFjdCBkYXRhLCBhbiBBUEkgY2FsbCBtdXN0IGJlIG1hZGUgYWNjb3JkaW5nIHRvIEFMUEhBIFZBTlRBR0UncyAKZG9jdW1lbnRhdGlvbi4KCkkndmUgd3JpdHRlbiBhIGZ1bmN0aW9uIHRoYXQgd3JhcHMgdGhlIGNhbGwgYXJndW1lbnRzIHRvIGV4dHJhY3QgZGF0YS4gCgpMb2FkIHRoZSBmdW5jdGlvbi9zIHVzaW5nIHRoZSBmb2xsb3dpbmcgc2NyaXB0LgoKYGBge3IgbG9hZF9mdW5jdGlvbnN9CnNvdXJjZSgiLi4vc3JjL2Z1bmN0aW9ucy5SIikKYGBgCgojIyBFeHRyYWN0IHN0b2NrIGRhdGEKClRlc3QgdGhlIGZ1bmN0aW9uIHdvcmtzIGJ5IHByb3ZpZGluZyBpdCBhIHRpY2tlcjogKipBU1g6QVBUIChBZnRlcnBheSkqKiAKKEl0IGhhcHBlbnMgdG8gYmUgdGhlIHRvcCBzdG9jayB0b2RheSBpbiB0ZXJtcyBvZiAlIGdhaW4pLgoKYGBge3IgZ2V0X3N0b2NrX2RhdGF9CmFwdCA8LSBnZXRfc3RvY2tfaGlzdCgiQVNYOkFQVCIpCmBgYAoKQnkgZGVmYXVsdCwgdGhlIGZ1bmN0aW9uIGRvd25sb2FkcyB0aGUgZnVsbCBoaXN0b3J5LgoKQmVsb3cgYXJlIHRoZSBmaXJzdCBmZXcgcm93cyBvZiB0aGUgZGF0YS4KCkl0IGNvbnRhaW5zIHRoZSBzdGFuZGFyZCBmaWVsZHM6CgoqIHRpbWVzdGFtcAoqIG9wZW4KKiBoaWdoCiogbG93CiogY2xvc2UKKiB2b2x1bWUKCmBgYHtyfQpoZWFkKGFwdCkKYGBgCgpTbyB0aGUgZnVuY3Rpb24gd29ya3MuCgpUaGUgbmV4dCBzdGVwIGlzIHRvIGRvd25sb2FkIGEgaG9zdCBvZiBzdG9ja3MuCgojIyBXcml0ZSBkYXRhIHRvIGNzdgoKRmluYWxseSwgc2F2ZSBlYWNoIHN0b2NrIGRhdGEgYXMgb25lIENTViBmaWxlLgoKT25lIGJpZyBDU1YgZmlsZSBtYWtlcyBpdCBlYXNpZXIgdG8gc2F2ZSBhbmQgbG9hZCB3aXRoIG1pbmltYWwgY29kZS4KCklmIHlvdSBwcmVmZXIgaW5kaXZpZHVhbCBDU1YgZmlsZXMsIGNvbnRhY3QgbWUuCgoqKk5PVEU6IGRhdGEgaXMgbm90IGNvbW1pdGVkIHRvIEdpdEh1Yi4qKgoKYGBge3Igd3JpdGVfdG9fY3N2fQpzdG9ja3MgPC0gcmJpbmQoYXB0KQoKcmVhZHI6OndyaXRlX2NzdihzdG9ja3MsICIuLi9kYXRhL3N0b2Nrcy5jc3YiKQpgYGAKCg==</div>
 
 
 
