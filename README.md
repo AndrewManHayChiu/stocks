@@ -1,1 +1,1 @@
-# stocks
+# Algorithmic trading
