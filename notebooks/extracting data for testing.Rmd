@@ -69,6 +69,19 @@ So the function works.
 
 The next step is to download a host of stocks.
 
+```{r}
+tickers <- c("CBA", "ANZ", "WBC", "NAB", "Z1P")
+tickers <- paste0("ASX:", tickers)
+
+stocks <- apt
+
+# for(i in 1:length(tickers)) {
+#   stocks <- rbind(stocks, get_stock_hist(tickers[i]))
+# }
+
+```
+
+
 ## Write data to csv
 
 Finally, save each stock data as one CSV file.
@@ -80,7 +93,7 @@ If you prefer individual CSV files, contact me.
 **NOTE: data is not commited to GitHub.**
 
 ```{r write_to_csv}
-stocks <- rbind(apt)
+# stocks <- rbind(apt)
 
 readr::write_csv(stocks, "../data/stocks.csv")
 ```

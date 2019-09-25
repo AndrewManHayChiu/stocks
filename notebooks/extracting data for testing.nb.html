@@ -1774,6 +1774,9 @@ summary {
 <p>Load the function/s using the following script.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc291cmNlKFwiLi4vc3JjL2Z1bmN0aW9ucy5SXCIpXG5gYGAifQ== -->
+<pre class="r"><code>source(&quot;../src/functions.R&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1782,6 +1785,9 @@ summary {
 <p>Test the function works by providing it a ticker: <strong>ASX:APT (Afterpay)</strong> (It happens to be the top stock today in terms of % gain).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXB0IDwtIGdldF9zdG9ja19oaXN0KFwiQVNYOkFQVFwiKVxuYGBgIn0= -->
+<pre class="r"><code>apt &lt;- get_stock_hist(&quot;ASX:APT&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>By default, the function downloads the full history.</p>
@@ -1808,6 +1814,20 @@ summary {
 <!-- rnb-text-begin -->
 <p>So the function works.</p>
 <p>The next step is to download a host of stocks.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpsZW5ndGgodGlja2VycykpIHtcbiAgc3RvY2tzIDwtIHJiaW5kKHN0b2NrcywgZ2V0X3N0b2NrX2hpc3QodGlja2Vyc1tpXSkpXG59XG5cbmBgYCJ9 -->
+<pre class="r"><code>for(i in 1:length(tickers)) {
+  stocks &lt;- rbind(stocks, get_stock_hist(tickers[i]))
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW5jb21wbGV0ZSBmaW5hbCBsaW5lIGZvdW5kIGJ5IHJlYWRUYWJsZUhlYWRlciBvbiAnaHR0cHM6Ly93d3cuYWxwaGF2YW50YWdlLmNvL3F1ZXJ5P2Z1bmN0aW9uPVRJTUVfU0VSSUVTX0RBSUxZJnN5bWJvbD1BU1g6WjFQJm91dHB1dHNpemU9ZnVsbCZkYXRhdHlwZT1jc3YmYXBpa2V5PVRIUUY3V01JTTI1WERWQ1AnRXJyb3IgaW4gYCQ8LS5kYXRhLmZyYW1lYChgKnRtcCpgLCBcInRpbWVzdGFtcFwiLCB2YWx1ZSA9IG51bWVyaWMoMCkpIDogXG4gIHJlcGxhY2VtZW50IGhhcyAwIHJvd3MsIGRhdGEgaGFzIDJcbiJ9 -->
+<pre><code>incomplete final line found by readTableHeader on 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&amp;symbol=ASX:Z1P&amp;outputsize=full&amp;datatype=csv&amp;apikey=THQF7WMIM25XDVCP'Error in `$&lt;-.data.frame`(`*tmp*`, &quot;timestamp&quot;, value = numeric(0)) : 
+  replacement has 0 rows, data has 2</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="write-data-to-csv" class="section level2">
 <h2>Write data to csv</h2>
@@ -1817,12 +1837,17 @@ summary {
 <p><strong>NOTE: data is not commited to GitHub.</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzdG9ja3MgPC0gcmJpbmQoYXB0KVxuXG5yZWFkcjo6d3JpdGVfY3N2KHN0b2NrcywgXCIuLi9kYXRhL3N0b2Nrcy5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code># stocks &lt;- rbind(apt)
+
+readr::write_csv(stocks, &quot;../data/stocks.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXh0cmFjdGluZyBkYXRhIGZvciB0ZXN0aW5nIgphdXRob3I6ICJBbmRyZXcgQ2hpdSIKZGF0ZTogMjAxOS0wOS0yNQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBJbmZvcm1hdGlvbgoKVGhlcmUgYXJlIHR3byB3YXlzIHRvIHRlc3QgdHJhZGluZyBzdHJhdGVnaWVzOgoKMS4gUGFwZXIgdHJhZGUKMi4gQmFja3Rlc3QKCkJvdGggbWV0aG9kcyBzaG91bGQgYmUgYWRvcHRlZCB0byB2ZXJpZnkgdHJhZGluZyBzdHJhdGVnaWVzLgoKSW4gb3JkZXIgdG8gY29uZHVjdCBiYWNrdGVzdGluZywgZGF0YSBuZWVkcyB0byBiZSBkb3dubG9hZGVkLgoKKipUaGUgcHVycG9zZSBvZiB0aGlzIG5vdGVib29rIGlzIHRvIGRvd25sb2FkIGhpc3RvcmljYWwgc3RvY2sgZGF0YSoqCgpJIHNpZ25lZCB1cCB0byBbQUxQSEEgVkFOVEFHRV0oaHR0cHM6Ly93d3cuYWxwaGF2YW50YWdlLmNvLyksIAphIHNpdGUgdGhhdCBwcm92aWRlcyAqcmVhbHRpbWUqIGFuZCAqaGlzdG9yaWNhbCogc3RvY2sgZGF0YS4KVGhleSBhbHNvIHByb3ZpZGUgRlggYW5kIGNyeXB0byBmZWVkcy4gCgpEYXRhIGNhbiBiZSBhY2Nlc3NlZCB2aWEgQVBJIGNhbGxzLgoKQWNjZXNzIHRvIGRhdGEgaXMgYWxzbyBmcmVlIQoKIyMgTG9hZCBmdW5jdGlvbgoKVG8gZXh0cmFjdCBkYXRhLCBhbiBBUEkgY2FsbCBtdXN0IGJlIG1hZGUgYWNjb3JkaW5nIHRvIEFMUEhBIFZBTlRBR0UncyAKZG9jdW1lbnRhdGlvbi4KCkkndmUgd3JpdHRlbiBhIGZ1bmN0aW9uIHRoYXQgd3JhcHMgdGhlIGNhbGwgYXJndW1lbnRzIHRvIGV4dHJhY3QgZGF0YS4gCgpMb2FkIHRoZSBmdW5jdGlvbi9zIHVzaW5nIHRoZSBmb2xsb3dpbmcgc2NyaXB0LgoKYGBge3IgbG9hZF9mdW5jdGlvbnN9CnNvdXJjZSgiLi4vc3JjL2Z1bmN0aW9ucy5SIikKYGBgCgojIyBFeHRyYWN0IHN0b2NrIGRhdGEKClRlc3QgdGhlIGZ1bmN0aW9uIHdvcmtzIGJ5IHByb3ZpZGluZyBpdCBhIHRpY2tlcjogKipBU1g6QVBUIChBZnRlcnBheSkqKiAKKEl0IGhhcHBlbnMgdG8gYmUgdGhlIHRvcCBzdG9jayB0b2RheSBpbiB0ZXJtcyBvZiAlIGdhaW4pLgoKYGBge3IgZ2V0X3N0b2NrX2RhdGF9CmFwdCA8LSBnZXRfc3RvY2tfaGlzdCgiQVNYOkFQVCIpCmBgYAoKQnkgZGVmYXVsdCwgdGhlIGZ1bmN0aW9uIGRvd25sb2FkcyB0aGUgZnVsbCBoaXN0b3J5LgoKQmVsb3cgYXJlIHRoZSBmaXJzdCBmZXcgcm93cyBvZiB0aGUgZGF0YS4KCkl0IGNvbnRhaW5zIHRoZSBzdGFuZGFyZCBmaWVsZHM6CgoqIHRpbWVzdGFtcAoqIG9wZW4KKiBoaWdoCiogbG93CiogY2xvc2UKKiB2b2x1bWUKCmBgYHtyfQpoZWFkKGFwdCkKYGBgCgpTbyB0aGUgZnVuY3Rpb24gd29ya3MuCgpUaGUgbmV4dCBzdGVwIGlzIHRvIGRvd25sb2FkIGEgaG9zdCBvZiBzdG9ja3MuCgojIyBXcml0ZSBkYXRhIHRvIGNzdgoKRmluYWxseSwgc2F2ZSBlYWNoIHN0b2NrIGRhdGEgYXMgb25lIENTViBmaWxlLgoKT25lIGJpZyBDU1YgZmlsZSBtYWtlcyBpdCBlYXNpZXIgdG8gc2F2ZSBhbmQgbG9hZCB3aXRoIG1pbmltYWwgY29kZS4KCklmIHlvdSBwcmVmZXIgaW5kaXZpZHVhbCBDU1YgZmlsZXMsIGNvbnRhY3QgbWUuCgoqKk5PVEU6IGRhdGEgaXMgbm90IGNvbW1pdGVkIHRvIEdpdEh1Yi4qKgoKYGBge3Igd3JpdGVfdG9fY3N2fQpzdG9ja3MgPC0gcmJpbmQoYXB0KQoKcmVhZHI6OndyaXRlX2NzdihzdG9ja3MsICIuLi9kYXRhL3N0b2Nrcy5jc3YiKQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXh0cmFjdGluZyBkYXRhIGZvciB0ZXN0aW5nIgphdXRob3I6ICJBbmRyZXcgQ2hpdSIKZGF0ZTogMjAxOS0wOS0yNQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBJbmZvcm1hdGlvbgoKVGhlcmUgYXJlIHR3byB3YXlzIHRvIHRlc3QgdHJhZGluZyBzdHJhdGVnaWVzOgoKMS4gUGFwZXIgdHJhZGUKMi4gQmFja3Rlc3QKCkJvdGggbWV0aG9kcyBzaG91bGQgYmUgYWRvcHRlZCB0byB2ZXJpZnkgdHJhZGluZyBzdHJhdGVnaWVzLgoKSW4gb3JkZXIgdG8gY29uZHVjdCBiYWNrdGVzdGluZywgZGF0YSBuZWVkcyB0byBiZSBkb3dubG9hZGVkLgoKKipUaGUgcHVycG9zZSBvZiB0aGlzIG5vdGVib29rIGlzIHRvIGRvd25sb2FkIGhpc3RvcmljYWwgc3RvY2sgZGF0YSoqCgpJIHNpZ25lZCB1cCB0byBbQUxQSEEgVkFOVEFHRV0oaHR0cHM6Ly93d3cuYWxwaGF2YW50YWdlLmNvLyksIAphIHNpdGUgdGhhdCBwcm92aWRlcyAqcmVhbHRpbWUqIGFuZCAqaGlzdG9yaWNhbCogc3RvY2sgZGF0YS4KVGhleSBhbHNvIHByb3ZpZGUgRlggYW5kIGNyeXB0byBmZWVkcy4gCgpEYXRhIGNhbiBiZSBhY2Nlc3NlZCB2aWEgQVBJIGNhbGxzLgoKQWNjZXNzIHRvIGRhdGEgaXMgYWxzbyBmcmVlIQoKIyMgTG9hZCBmdW5jdGlvbgoKVG8gZXh0cmFjdCBkYXRhLCBhbiBBUEkgY2FsbCBtdXN0IGJlIG1hZGUgYWNjb3JkaW5nIHRvIEFMUEhBIFZBTlRBR0UncyAKZG9jdW1lbnRhdGlvbi4KCkkndmUgd3JpdHRlbiBhIGZ1bmN0aW9uIHRoYXQgd3JhcHMgdGhlIGNhbGwgYXJndW1lbnRzIHRvIGV4dHJhY3QgZGF0YS4gCgpMb2FkIHRoZSBmdW5jdGlvbi9zIHVzaW5nIHRoZSBmb2xsb3dpbmcgc2NyaXB0LgoKYGBge3IgbG9hZF9mdW5jdGlvbnN9CnNvdXJjZSgiLi4vc3JjL2Z1bmN0aW9ucy5SIikKYGBgCgojIyBFeHRyYWN0IHN0b2NrIGRhdGEKClRlc3QgdGhlIGZ1bmN0aW9uIHdvcmtzIGJ5IHByb3ZpZGluZyBpdCBhIHRpY2tlcjogKipBU1g6QVBUIChBZnRlcnBheSkqKiAKKEl0IGhhcHBlbnMgdG8gYmUgdGhlIHRvcCBzdG9jayB0b2RheSBpbiB0ZXJtcyBvZiAlIGdhaW4pLgoKYGBge3IgZ2V0X3N0b2NrX2RhdGF9CmFwdCA8LSBnZXRfc3RvY2tfaGlzdCgiQVNYOkFQVCIpCmBgYAoKQnkgZGVmYXVsdCwgdGhlIGZ1bmN0aW9uIGRvd25sb2FkcyB0aGUgZnVsbCBoaXN0b3J5LgoKQmVsb3cgYXJlIHRoZSBmaXJzdCBmZXcgcm93cyBvZiB0aGUgZGF0YS4KCkl0IGNvbnRhaW5zIHRoZSBzdGFuZGFyZCBmaWVsZHM6CgoqIHRpbWVzdGFtcAoqIG9wZW4KKiBoaWdoCiogbG93CiogY2xvc2UKKiB2b2x1bWUKCmBgYHtyfQpoZWFkKGFwdCkKYGBgCgpTbyB0aGUgZnVuY3Rpb24gd29ya3MuCgpUaGUgbmV4dCBzdGVwIGlzIHRvIGRvd25sb2FkIGEgaG9zdCBvZiBzdG9ja3MuCgpgYGB7cn0KdGlja2VycyA8LSBjKCJDQkEiLCAiQU5aIiwgIldCQyIsICJOQUIiLCAiWjFQIikKdGlja2VycyA8LSBwYXN0ZTAoIkFTWDoiLCB0aWNrZXJzKQoKc3RvY2tzIDwtIGFwdAoKIyBmb3IoaSBpbiAxOmxlbmd0aCh0aWNrZXJzKSkgewojICAgc3RvY2tzIDwtIHJiaW5kKHN0b2NrcywgZ2V0X3N0b2NrX2hpc3QodGlja2Vyc1tpXSkpCiMgfQoKYGBgCgoKIyMgV3JpdGUgZGF0YSB0byBjc3YKCkZpbmFsbHksIHNhdmUgZWFjaCBzdG9jayBkYXRhIGFzIG9uZSBDU1YgZmlsZS4KCk9uZSBiaWcgQ1NWIGZpbGUgbWFrZXMgaXQgZWFzaWVyIHRvIHNhdmUgYW5kIGxvYWQgd2l0aCBtaW5pbWFsIGNvZGUuCgpJZiB5b3UgcHJlZmVyIGluZGl2aWR1YWwgQ1NWIGZpbGVzLCBjb250YWN0IG1lLgoKKipOT1RFOiBkYXRhIGlzIG5vdCBjb21taXRlZCB0byBHaXRIdWIuKioKCmBgYHtyIHdyaXRlX3RvX2Nzdn0KIyBzdG9ja3MgPC0gcmJpbmQoYXB0KQoKcmVhZHI6OndyaXRlX2NzdihzdG9ja3MsICIuLi9kYXRhL3N0b2Nrcy5jc3YiKQpgYGAKCg==</div>
 
 
 
