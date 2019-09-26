@@ -1,3 +1,9 @@
+<!-- PROJECT SHEILDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -10,6 +16,8 @@
 
 This project seeks to build an algorithmic trading robot to trade shares on the
 ASX.
+
+
 
 <!-- CONTRIBUTING-->
 ## Contributing
