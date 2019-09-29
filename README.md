@@ -18,10 +18,24 @@
 This project seeks to build an algorithmic trading robot to trade shares on the
 ASX.
 
+<!-- UPDATES -->
+## Updates
+
+### 30 September, 2019
+
+The project is new. Nothing to update at the moment.
 
 
-<!-- CONTRIBUTING-->
+<!-- CONTRIBUTORS -->
+## Contributors
+
+
+<!-- CONTRIBUTING -->
 ## Contributing
+
+Trello is being used for managing this project. You can contribute there.
+
+For technical contributions:
 
 1. Fork the Project
 2. Create a new branch for your feature
