@@ -5,9 +5,9 @@ library(ggplot2)
 shinyServer(function(input, output) {
 
     output$example_plot <- renderPlot({
-        ggplot(data = stock_amzn,
+        ggplot(data = anz,
                aes(x = date, y = close)) +
             geom_line() +
-            labs(title = "Amazon (USD)")
+            labs(title = "stock price")
     })
 })
