@@ -1,6 +1,7 @@
 ## ui.R ##
 
 library(shinydashboard)
+library(plotly)
 
 width <- 175
 
@@ -19,7 +20,7 @@ body <- dashboardBody(
     tabItems(
         tabItem(tabName = "dashboard",
                 h2("Dashboard"),
-                plotOutput("example_plot"))
+                plotlyOutput("example_plotly"))
     )
 )
 
