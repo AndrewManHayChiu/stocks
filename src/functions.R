@@ -4,6 +4,24 @@ library(ggplot2)
 
 # Download stock data -----------------------------------------------------
 
+get_intraday <- function(stock, outputsize = "compact", interval = "5min") {
+  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
+  call <- paste0(base,
+                 "&symbol=", stock,
+                 "&interval=", interval,
+                 "&outputsize=", outputsize,
+                 "&apikey=", "THQF7WMIM25XDVCP",
+                 "&datatype=", "csv"
+                 )
+  
+  df <- read.csv(call)
+  
+  df$timestamp <- lubridate::ymd_hms(df$timestamp)
+  
+  # Return
+  df
+}
+
 get_stock_hist <- function(stock, outputsize = "full") {
   # Download ASX stock data from AlphaVantage
   # 
