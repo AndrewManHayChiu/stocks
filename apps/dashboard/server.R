@@ -13,14 +13,17 @@ shinyServer(function(input, output) {
     })
     
     output$example_plotly <- renderPlotly({
-      p <- plot_ly(data = apt,
+      p <- plot_ly(data = rdf,
                    x = ~timestamp, y = ~close, 
+                   type = "scatter",
                    mode = "lines", name = "Price") %>%
+        add_trace(y = ~SMA, name = "SMA", line = list(dash = "dash")) %>%
         layout(yaxis = list(title = "Price"))
-      pp <- plot_ly(data = apt, 
+      pp <- plot_ly(data = rdf, 
                     x = ~timestamp, y = ~volume,
                     type = "bar", name = "Volume") %>%
         layout(yaxis = list(title = "Volume"))
+      
       # Create range selector buttons
       rs <- list(visible = TRUE, x = 0.5, y = -0.055,
                  xanchor = 'center', yref = 'paper',
@@ -46,11 +49,12 @@ shinyServer(function(input, output) {
       # Subplot with shared axis
       p <- subplot(p, pp, heights = c(0.7, 0.2), nrows = 2,
                    shareX = TRUE, titleY = TRUE) %>%
-        layout(title = "APT",
+        layout(title = "RDF",
                xaxis = list(rangeslider = rs),
                legend = list(orientation = "h", x = 0.5, y = 1,
                              xanchor = "center", yref = "paper",
                              bgcolor = "transparent"))
       p
+      
     })
 })

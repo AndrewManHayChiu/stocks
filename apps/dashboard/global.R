@@ -6,4 +6,6 @@ library(stringr)
 
 source("functions.R")
 
-apt <- get_stock_hist(stock = "ASX:APT")
+rdf <- get_intraday("RDF", outputsize = "full") %>% as_tibble()
+rdf_sma <- get_sma("RDF") %>% as_tibble()
+rdf <- rdf %>% left_join(rdf_sma, by = c("timestamp" = "time")) %>% as.data.frame()
