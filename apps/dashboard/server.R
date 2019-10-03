@@ -4,26 +4,32 @@ library(ggplot2)
 library(plotly)
 
 shinyServer(function(input, output) {
-
-    output$example_plot <- renderPlot({
-        ggplot(data = anz,
-               aes(x = date, y = close)) +
-            geom_line() +
-            labs(title = "stock price")
+    
+    # reactive data for selected stock
+    stock_df <- reactive({
+      df[df$code == input$select, ]
     })
     
     output$example_plotly <- renderPlotly({
-      p <- plot_ly(data = rdf,
-                   x = ~timestamp, y = ~close, 
+      p <- plot_ly(data = stock_df(),
+                   x = ~timestamp, y = ~close,
                    type = "scatter",
                    mode = "lines", name = "Price") %>%
-        add_trace(y = ~SMA, name = "SMA", line = list(dash = "dash")) %>%
+        # add_trace(x = ~timestamp, type = "ohlc",
+        #           open = ~open, close = ~close,
+        #           high = ~high, low = ~low) %>%
+        # add_trace(y = ~SMA, name = "SMA", line = list(dash = "dash")) %>%
         layout(yaxis = list(title = "Price"))
-      pp <- plot_ly(data = rdf, 
+      pp <- plot_ly(data = stock_df(),
                     x = ~timestamp, y = ~volume,
                     type = "bar", name = "Volume") %>%
         layout(yaxis = list(title = "Volume"))
-      
+      ppp <- plot_ly(data = stock_df(),
+                     x = ~timestamp, type = "ohlc",
+                     open = ~open, close = ~close,
+                     high = ~high, low = ~low) %>%
+        layout(yaxis = list(title = "Price"))
+
       # Create range selector buttons
       rs <- list(visible = TRUE, x = 0.5, y = -0.055,
                  xanchor = 'center', yref = 'paper',
@@ -45,16 +51,17 @@ shinyServer(function(input, output) {
                         step='month',
                         stepmode='backward')
                  ))
-      
+
       # Subplot with shared axis
-      p <- subplot(p, pp, heights = c(0.7, 0.2), nrows = 2,
+      p <- subplot(p, pp, ppp, heights = c(0.4, 0.2, 0.4), nrows = 3,
                    shareX = TRUE, titleY = TRUE) %>%
-        layout(title = "RDF",
-               xaxis = list(rangeslider = rs),
+        layout(title = input$select,
+               xaxis = list(rangeslider = rs, title = ""),
                legend = list(orientation = "h", x = 0.5, y = 1,
                              xanchor = "center", yref = "paper",
                              bgcolor = "transparent"))
       p
-      
+
     })
+
 })
