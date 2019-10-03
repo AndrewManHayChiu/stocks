@@ -51,7 +51,7 @@ get_sma <- function(stock, interval = "5min", time_period = "20", series_type = 
   df
 }
 
-get_stock_hist <- function(stock, outputsize = "full") {
+get_alphavantage <- function(stock, series = "TIME_SERIES_DAILY", outputsize = "compact", interval = "5min") {
   # Download ASX stock data from AlphaVantage
   # 
   # Args:
@@ -63,16 +63,34 @@ get_stock_hist <- function(stock, outputsize = "full") {
   # Returns:
   #   A data frame of stock data
   
-  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
-  call <- paste0(base, 
-                 stock, 
-                 "&outputsize=", outputsize,
-                 "&datatype=", "csv",
-                 "&apikey=", "THQF7WMIM25XDVCP")
+  # if (series = "TIME_SERIES_INTRADAY" & ) {
+  #   stop()
+  # }
+   
+  base <- "https://www.alphavantage.co/query?"
   
-  df <- read.csv(call)
+  if (series == "TIME_SERIES_DAILY") {
+    call <- paste0(base, 
+                   "function=", series,
+                   "&symbol=", "ASX:", stock, 
+                   "&outputsize=", outputsize,
+                   "&datatype=", "csv",
+                   "&apikey=", "THQF7WMIM25XDVCP")
+  } else if (series == "TIME_SERIES_INTRADAY") {
+    call <- paste0(base, 
+                   "function=", series,
+                   "&symbol=", "ASX:", stock, 
+                   "&outputsize=", outputsize,
+                   "&datatype=", "csv",
+                   "&interval=", interval,
+                   "&apikey=", "THQF7WMIM25XDVCP")
+  }
+
   
-  df$timestamp <- lubridate::ymd(df$timestamp)
+  read.csv(call)
+  # df <- read.csv(call)
   
-  return(df)
+  # df$timestamp <- lubridate::ymd(df$timestamp)
+
+  # return(df)
 }
