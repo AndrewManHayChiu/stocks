@@ -17,10 +17,23 @@ sidebar <- dashboardSidebar(
 )
 
 body <- dashboardBody(
+    
+    tags$head(tags$style(HTML('
+                              /* body */
+                              .content-wrapper, .right-side {
+                              background-color: #ffffff;
+                              }
+                              '))),
+    
     tabItems(
         tabItem(tabName = "dashboard",
                 h2("Dashboard"),
-                plotlyOutput("example_plotly"))
+                selectInput(inputId = "select",
+                            label = h4("Select a stock"), 
+                            choices = code_list,
+                            selected = 1),
+                plotlyOutput("example_plotly")
+                )
     )
 )
 
