@@ -24,7 +24,7 @@ tickers <- data.frame(blue, mid, small, micro) %>%
 # Initiate empty data frame to store stock data
 df <- data.frame()
 
-for (i in 11:15) {
+for (i in 21:24) {
   
   tryCatch({
     print(paste(tickers$ticker[i], ":", i, "of", length(tickers$ticker)))
