@@ -21,6 +21,9 @@ sidebar <- dashboardSidebar(
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"),
                  badgeLabel = "new", badgeColor = "green"),
+        menuItem("Sentiments", tabName = "sentiments",
+                 icon = icon("laugh-squint"),
+                 badgeLabel = "empty", badgeColor = "black"),
         menuItem("Research", tabName = "research",
                  icon = icon("user-graduate"), 
                  badgeLabel = "empty", badgeColor = "black"),
@@ -67,6 +70,13 @@ body <- dashboardBody(
                             selected = 1),
                 plotlyOutput("example_plotly")
                 ),
+        
+        tabItem(tabName = "sentiments",
+                h2("Sentiment"),
+                br(),
+                textInput("stringSearch", label = h3("Search twitter"), value = "ASX"),
+                hr(),
+                tableOutput("searchResults")),
         
         tabItem(tabName = "research",
                 h2("Research"),
