@@ -22,7 +22,7 @@ get_intraday <- function(stock, outputsize = "compact", interval = "5min") {
                  "&outputsize=", outputsize,
                  "&apikey=", "THQF7WMIM25XDVCP",
                  "&datatype=", "csv"
-                 )
+  )
   
   df <- read.csv(call)
   
@@ -41,7 +41,7 @@ get_sma <- function(stock, interval = "5min", time_period = "20", series_type = 
                  "&series_type=", series_type,
                  "&apikey=", "THQF7WMIM25XDVCP",
                  "&datatype=", "csv"
-                 )
+  )
   
   df <- read.csv(call)
   
@@ -51,7 +51,7 @@ get_sma <- function(stock, interval = "5min", time_period = "20", series_type = 
   df
 }
 
-get_alphavantage <- function(stock, series = "TIME_SERIES_DAILY", outputsize = "compact", interval = "5min") {
+get_stock_hist <- function(stock, outputsize = "full") {
   # Download ASX stock data from AlphaVantage
   # 
   # Args:
@@ -63,34 +63,16 @@ get_alphavantage <- function(stock, series = "TIME_SERIES_DAILY", outputsize = "
   # Returns:
   #   A data frame of stock data
   
-  # if (series = "TIME_SERIES_INTRADAY" & ) {
-  #   stop()
-  # }
-   
-  base <- "https://www.alphavantage.co/query?"
+  base <- "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
+  call <- paste0(base, 
+                 stock, 
+                 "&outputsize=", outputsize,
+                 "&datatype=", "csv",
+                 "&apikey=", "THQF7WMIM25XDVCP")
   
-  if (series == "TIME_SERIES_DAILY") {
-    call <- paste0(base, 
-                   "function=", series,
-                   "&symbol=", "ASX:", stock, 
-                   "&outputsize=", outputsize,
-                   "&datatype=", "csv",
-                   "&apikey=", "THQF7WMIM25XDVCP")
-  } else if (series == "TIME_SERIES_INTRADAY") {
-    call <- paste0(base, 
-                   "function=", series,
-                   "&symbol=", "ASX:", stock, 
-                   "&outputsize=", outputsize,
-                   "&datatype=", "csv",
-                   "&interval=", interval,
-                   "&apikey=", "THQF7WMIM25XDVCP")
-  }
-
+  df <- read.csv(call)
   
-  read.csv(call)
-  # df <- read.csv(call)
+  df$timestamp <- lubridate::ymd(df$timestamp)
   
-  # df$timestamp <- lubridate::ymd(df$timestamp)
-
-  # return(df)
+  return(df)
 }
