@@ -63,10 +63,6 @@ get_alphavantage <- function(stock, series = "TIME_SERIES_DAILY", outputsize = "
   # Returns:
   #   A data frame of stock data
   
-  # if (series = "TIME_SERIES_INTRADAY" & ) {
-  #   stop()
-  # }
-   
   base <- "https://www.alphavantage.co/query?"
   
   if (series == "TIME_SERIES_DAILY") {
@@ -88,9 +84,5 @@ get_alphavantage <- function(stock, series = "TIME_SERIES_DAILY", outputsize = "
 
   
   read.csv(call)
-  # df <- read.csv(call)
-  
-  # df$timestamp <- lubridate::ymd(df$timestamp)
 
-  # return(df)
 }
