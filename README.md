@@ -18,6 +18,39 @@
 This project seeks to build an algorithmic trading robot to trade shares on the
 ASX.
 
+### Brokerage
+
+The nominated broker is Interactive Brokers
+
+### Hardware
+
+R scripts need reliable hardware to run, preferably Linux.
+
+A Google Cloud server is probably a good option.
+
+### Software
+
+#### R
+
+Obviously, using R, so install both **R** and **RStudio Server** (Open Source Edition) onto the server.
+
+The following R packages are needed:
+
+* IBrokers
+* tidyverse
+
+#### Ubuntu Desktop
+
+The Interactive Brokers' trading software is required, but this requires a GUI.
+
+Install Ubuntu GUI using Chrome Remote Desktop or VNC
+
+#### Interactive Brokers' Trading Software
+
+Lastly, download and install the IB trading software for access to the API capabilities.
+
+*Note: IB's trading software shuts down daily. May need to write a bash script to open the program daily, or install IBcontrller.*
+
 <!-- UPDATES -->
 ## Updates
 
