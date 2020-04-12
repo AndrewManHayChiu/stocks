@@ -1,24 +1,50 @@
-library(dplyr)
-library(smooth)
-
 library(quantmod)
-library(zoo)
-library(xts)
+# library(dplyr)
+# library(smooth)
 
-ven <- df[df$code == "VEN", 1:6]
+files <- list.files("data/daily")
 
-ven <- as.data.frame(ven)
+data <- readr::read_csv(paste0("data/daily/", files[1]))
 
-row.names(ven) <- ven$timestamp
+# Convert data to an xts (extensible time series) object 
+data <- xts(data[, -1], order.by = data[, 1])  # timestamp is at column 1
 
-ven <- as.xts(ven[, 2:6])
+# Changes in price (open and close)
+OpCl(data)
+OpOp(data)
 
-ven
+# Lags
+Lag(data$close, c(1, 2, 3))
 
-class(ven)
+# SUbsetting is easy usint xts
+data["2020"]
+data["2019-11::2020-01"]
 
-head(ven)
+last(data, "3 weeks")
+last(data, "2 months")
 
-plot(ven$close, main = "VEN")
+# Aggregate to lower frequency data
+to.weekly(data)
+to.monthly(data)
 
-candleChart(ven, up.col = "black", dn.col = "red")
+# How much data is there?
+ndays(data); nweeks(data); nyears(data)
+
+# Returns
+dailyReturn(data)[1:5]
+allReturns(data)[1:5]
+
+
+# Plotting ----------------------------------------------------------------
+
+barChart(data)
+
+candleChart(data)
+
+plot(data$close,
+     major.ticks = "months",
+     minor.ticks = FALSE,
+     main = files[1],
+     col = 3)
+
+# Technical analysis from package TTR can be added
