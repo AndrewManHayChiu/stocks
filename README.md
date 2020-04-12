@@ -54,6 +54,10 @@ Lastly, download and install the IB trading software for access to the API capab
 <!-- UPDATES -->
 ## Updates
 
+### 12 April, 2020
+
+Coronavirus hit us. Markets are crazy. Time to do something about it!
+
 ### 30 September, 2019
 
 The project is new. Nothing to update at the moment.
