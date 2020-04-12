@@ -19,14 +19,13 @@ for (i in 1) {
     
     data <- get_alphavantage(stock = tickers[i], outputsize = "full")
     
-    filePath <- paste0(path, "/daily/",tickers[i], ".csv")
+    filepath <- paste0(path, "/daily/",tickers[i], ".csv")
     
-    write.zoo(data, filePath, sep = ",", row.names = F)
+    readr::write_csv(data, filepath)
   }, 
   
   error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
   )
-  
 }
 
 # Download Intraday data
@@ -45,5 +44,4 @@ for (i in 1) {
   
   error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
   )
-  
 }
