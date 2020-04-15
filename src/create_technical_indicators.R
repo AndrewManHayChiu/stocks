@@ -1,13 +1,11 @@
 library(quantmod)
-# library(dplyr)
-# library(smooth)
 
 files <- list.files("data/daily")
 
 data <- readr::read_csv(paste0("data/daily/", files[1]))
 
 # Convert data to an xts (extensible time series) object 
-data <- xts(data[, -1], order.by = data[, 1])  # timestamp is at column 1
+data <- xts(data[, -1], order.by = data$timestamp)  # timestamp is at column 1
 
 # Changes in price (open and close)
 OpCl(data)
@@ -39,12 +37,9 @@ allReturns(data)[1:5]
 
 barChart(data)
 
-candleChart(data)
-
-plot(data$close,
-     major.ticks = "months",
-     minor.ticks = FALSE,
-     main = files[1],
-     col = 3)
+candleChart(data, subset = "2019-11::2020",
+            theme = "white", type = "candles")
 
 # Technical analysis from package TTR can be added
+
+chartSeries(data, theme = "white", TA = "addSMA(); addBBands()")

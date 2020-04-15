@@ -7,7 +7,7 @@
 #              "IDX", "VRL", "MYR", "AKP", "KMD", "MVF",
 #              "AVZ", "AYS", "4DS", "TWD", "CCV", "SSG")
 
-tickers <- c("PGL", "SCU", "CDY", "AMA", "CDY")
+tickers <- c("PGL.AX", "WES.AX", "APT.AX")
 
 # Make sure there are no duplicates
 tickers <- unique(tickers)

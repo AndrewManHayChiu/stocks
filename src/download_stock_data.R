@@ -3,25 +3,42 @@
 
 # Data can be updated with new data using the updateData.R script
 
-library(zoo)
+# library(zoo)
+library(quantmod)
 
 source("src/functions.R")
-source("src/tickers.R")
+# source("src/tickers.R")
+
+asx300 <- readr::read_csv("data/20200401-asx300.csv", skip = 1)
 
 path <- "data"
 
+# TODO: Download data in batches:
+# https://cran.r-project.org/web/packages/BatchGetSymbols/vignettes/BatchGetSymbols-vignette.html
+
 # Download daily data
-# 5 at a time with free account from AlphaVantage
-for (i in 1) {
+for (ticker in asx300$Code) {
   
   tryCatch({
-    print(tickers[i])
     
-    data <- get_alphavantage(stock = tickers[i], outputsize = "full")
+    # data <- get_alphavantage(stock = tickers[i], outputsize = "full")
     
-    filepath <- paste0(path, "/daily/",tickers[i], ".csv")
+    df_stock <- data.frame(ticker = ticker, 
+                           getSymbols(ticker,
+                                      src = 'yahoo',
+                                      from = Sys.Date() - 365,
+                                      to = Sys.Date(),
+                                      auto.assign = FALSE)
+                           )
     
-    readr::write_csv(data, filepath)
+    df_stock$date <- rownames(df_stock)
+    
+    filepath <- paste0(path, "/daily/", ticker, ".csv")
+    
+    readr::write_csv(df_stock, filepath)
+    
+    print(paste(ticker, ":", "Successfully downloaded", sep = " "))
+    
   }, 
   
   error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
@@ -30,18 +47,18 @@ for (i in 1) {
 
 # Download Intraday data
 
-for (i in 1) {
-  
-  tryCatch({
-    print(tickers[i])
-    
-    data <- get_alphavantage(stock = tickers[1], series = "TIME_SERIES_INTRADAY", outputsize = "full", interval = "5min")
-    
-    filePath <- paste0(path, "/intraday/", tickers[i], ".csv")
-    
-    write.zoo(data, filePath, sep = ",", row.names = F)
-  }, 
-  
-  error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
-  )
-}
+# for (i in 1) {
+#   
+#   tryCatch({
+#     print(tickers[i])
+#     
+#     data <- get_alphavantage(stock = tickers[1], series = "TIME_SERIES_INTRADAY", outputsize = "full", interval = "5min")
+#     
+#     filePath <- paste0(path, "/intraday/", tickers[i], ".csv")
+#     
+#     write.zoo(data, filePath, sep = ",", row.names = F)
+#   }, 
+#   
+#   error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
+#   )
+# }
