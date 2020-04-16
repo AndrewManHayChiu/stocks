@@ -6,7 +6,7 @@
 # library(zoo)
 library(quantmod)
 
-source("src/functions.R")
+# source("src/functions.R")
 # source("src/tickers.R")
 
 asx300 <- readr::read_csv("data/20200401-asx300.csv", skip = 1)
@@ -31,7 +31,7 @@ for (ticker in asx300$Code) {
                                       auto.assign = FALSE)
                            )
     
-    df_stock$date <- rownames(df_stock)
+    df_stock$timestamp <- rownames(df_stock)
     
     filepath <- paste0(path, "/daily/", ticker, ".csv")
     

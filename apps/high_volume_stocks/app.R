@@ -15,34 +15,18 @@ library(lubridate)
 library(data.table)
 
 # Load data
-files <- list.files("../../data/daily")
-
-# TODO: old data files may cause inconsistent colnames for row binding in loop below
+files <- list.files("data")
 
 data <- data.frame()
 
 for (i in 1:length(files)) {
-    temp <- read_csv(paste0("../../data/daily/", files[i])) %>%
+    temp <- read_csv(paste0("data/", files[i])) %>%
         mutate(ticker = strsplit(files[i], ".csv")[[1]])
-    names(temp)[2:7] <- c("Open", "High", "Low", "Close", "Volume", "Adjusted")
     data <- rbind(data, temp)
 }
 
-# Convert data to an xts (extensible time series) object 
-data <- xts(data[, -c(1, 7)], order.by = data$date)
-
-weekly_data  <- to.weekly(data)
-monthly_data <- to.monthly(data)
-
-stock_volumes <- data.frame(week = index(weekly_data)[nrow(weekly_data)],
-                            volume = weekly_data[nrow(weekly_data), ]$data.Volume) %>%
-    rename(volume = data.Volume)
-stock_volumes$ticker <- "PGL"
-stock_volumes$volume_last_month <- monthly_data[nrow(monthly_data) - 1, ]$data.Volume
-stock_volumes <- select(stock_volumes, ticker, week, everything()) %>%
-    mutate(volume_to_last_month = volume / volume_last_month)
-
-stock_volumes
+data <- filter(data,
+               week == max(week))
 
 # TODO: Update stock volume data nightly
 
@@ -71,13 +55,13 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             h2("Stock volumes"),
-            dataTableOutput("table_stock_volumes"),
+            dataTableOutput("table_stock_volumes")
             
-            h2("Monthly trading volume"),
-            plotOutput("chart_monthly_volume"),
-            
-            h2("Stock data"),
-            dataTableOutput("ticker_data") 
+            # h2("Monthly trading volume"),
+            # plotOutput("chart_monthly_volume"),
+            # 
+            # h2("Stock data"),
+            # dataTableOutput("ticker_data") 
         )
     )
 )
@@ -95,20 +79,20 @@ server <- function(input, output) {
     # })
     
     output$table_stock_volumes <- renderDataTable({
-        stock_volumes
+        data
     })
     
-    output$ticker_data <- renderDataTable({
-        data.frame(weekly_data) %>%
-            mutate(week = index(weekly_data)) %>%
-            select(week, everything()) %>%
-            arrange(desc(week))
-    })
+    # output$ticker_data <- renderDataTable({
+    #     data.frame(weekly_data) %>%
+    #         mutate(week = index(weekly_data)) %>%
+    #         select(week, everything()) %>%
+    #         arrange(desc(week))
+    # })
     
-    output$chart_monthly_volume <- renderPlot({
-        plot(monthly_data$data.Volume,
-             main = "Monthly Volume ($ Traded)")
-    })
+    # output$chart_monthly_volume <- renderPlot({
+    #     plot(monthly_data$data.Volume,
+    #          main = "Monthly Volume ($ Traded)")
+    # })
 }
 
 # Run the application 
