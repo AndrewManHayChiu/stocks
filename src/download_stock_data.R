@@ -33,9 +33,9 @@ for (ticker in asx300$Code) {
     
     df_stock$timestamp <- rownames(df_stock)
     
-    filepath <- paste0(path, "/daily/", ticker, ".csv")
+    readr::write_csv(df_stock, paste0(path, "/daily/", ticker, ".csv"))
     
-    readr::write_csv(df_stock, filepath)
+    readr::write_csv(df_stock, paste0("apps/dashboard/data/daily/", ticker, ".csv"))
     
     print(paste(ticker, ":", "Successfully downloaded", sep = " "))
     

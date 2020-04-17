@@ -1,23 +1,14 @@
 ## server.R ##
 
-# setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
 
 shinyServer(function(input, output, session) {
-    
-    # reactive data for selected stock
-    stock_df <- reactive({
-      df[df$code == input$select, ]
-    })
+  
     
     output$example_plotly <- renderPlotly({
       p <- plot_ly(data = stock_df(),
                    x = ~timestamp, y = ~close,
                    type = "scatter",
                    mode = "lines", name = "Price") %>%
-        # add_trace(x = ~timestamp, type = "ohlc",
-        #           open = ~open, close = ~close,
-        #           high = ~high, low = ~low) %>%
-        # add_trace(y = ~SMA, name = "SMA", line = list(dash = "dash")) %>%
         layout(yaxis = list(title = "Price"))
       pp <- plot_ly(data = stock_df(),
                     x = ~timestamp, y = ~volume,
@@ -63,18 +54,27 @@ shinyServer(function(input, output, session) {
 
     })
     
+    # reactive data for selected stock
+    stock_df <- reactive({
+      
+      stock_df <- stocks[stocks$ticker == input$selected_ticker, ]
+      
+      # convert to xts
+      xts(stock_df[, -c(1, 2)], order.by = stock_df$timestamp)
+      
+    })
     
-    # tweets_df <- reactive({
-    #   tweets <- searchTwitter(input$stringSearch, n = 25)
-    #   
-    #   twListToDF(tweets)
-    # })
-    # 
-    # output$searchResults <- renderTable({
-    #   
-    #   tweets_df()[, c(1, 11, 12)]
-    #   
-    # })
+    output$quantmod_chart <- renderPlot({
+      # stock_df <- stocks[stocks$ticker == input$selected_ticker, ]
+      # 
+      # stock_df <- xts(stock_df[, -c(1, 2)], order.by = stock_df$timestamp)
+      
+      chartSeries(stock_df(),
+                  theme = "white",
+                  TA = "addVo(); addSMA()")
+    })
+    
+    output$selected_ticker <- renderText({input$selected_ticker})
     
     output$table_stock_volumes <- renderDataTable({
       data

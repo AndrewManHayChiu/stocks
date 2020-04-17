@@ -34,8 +34,10 @@ for (i in 1:length(files)) {
                volume_to_last_month = as.numeric(volume / volume_last_month))
       
       zoo::write.zoo(weekly_data, paste0("data/weekly/", ticker))
+      # zoo::write.zoo(weekly_data, paste0("apps/dashboard/data/weekly/", ticker))
       zoo::write.zoo(monthly_data, paste0("data/monthly/", ticker))
-      readr::write_csv(stock_volumes, paste0("apps/dashboard/data/", ticker, ".csv"))
+      # zoo::write.zoo(monthly_data, paste0("apps/dashboard/data/monthly/", ticker))
+      readr::write_csv(stock_volumes, paste0("apps/dashboard/data/volume/", ticker, ".csv"))
     },
     
     error = function(e) {

@@ -13,7 +13,7 @@ sidebar <- dashboardSidebar(
     tags$head(tags$style(HTML('
                               /* sidebar */
                               {
-                              background-color: #ffffff;
+                              background-color: #000000;
                               }
                               '))),
     
@@ -21,16 +21,17 @@ sidebar <- dashboardSidebar(
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"),
                  badgeLabel = "empty", badgeColor = "black"),
+        
         menuItem("Stock", tabName = "stock", icon = icon("chart-line"),
-                 badgeLabel = "test", badgeColor = "black"),
+                 badgeLabel = "new", badgeColor = "green"),
+        
         menuItem("High Vol Stocks", tabName = "hv_stocks", icon = icon("chart-bar"),
                  badgeLabel = "new", badgeColor = "green"),
-        # menuItem("Sentiments", tabName = "sentiments",
-        #          icon = icon("laugh-squint"),
-        #          badgeLabel = "empty", badgeColor = "black"),
+        
         menuItem("Research", tabName = "research",
                  icon = icon("user-graduate"), 
                  badgeLabel = "empty", badgeColor = "black"),
+        
         menuItem("Disclaimer", tabName = "disclaimer",
                  icon = icon("question"))
     )
@@ -41,12 +42,12 @@ body <- dashboardBody(
     tags$head(tags$style(HTML('
                               /* navbar */
                               .skin-blue .main-header .navbar {
-                              background-color: #ffffff;
+                              background-color: #000000;
                               }
                               
                               /* main sidebar */
                               .skin-blue .main-sidebar {
-                              background-color: #ffffff;
+                              background-color: #000000;
                               }
                               
                               /* body */
@@ -72,11 +73,15 @@ body <- dashboardBody(
         
         tabItem(tabName = "stock",
                 h2("Stock"),
-                selectInput(inputId = "select",
+                selectInput(inputId = "selected_ticker",
                             label = h4("Select a stock"), 
-                            choices = code_list,
+                            # choices = code_list,
+                            choices = ticker_list,
                             selected = 1),
-                plotlyOutput("example_plotly")
+                # plotlyOutput("example_plotly")
+                
+                plotOutput("quantmod_chart")
+                
                 ),
         
         tabItem(tabName = "hv_stocks",
@@ -85,13 +90,6 @@ body <- dashboardBody(
                 dataTableOutput("table_stock_volumes")
                 
                 ),
-        
-        # tabItem(tabName = "sentiments",
-        #         h2("Sentiment"),
-        #         br(),
-        #         textInput("stringSearch", label = h3("Search twitter"), value = "ASX"),
-        #         hr(),
-        #         tableOutput("searchResults")),
         
         tabItem(tabName = "research",
                 h2("Research"),
@@ -110,4 +108,4 @@ body <- dashboardBody(
     )
 )
 
-dashboardPage(header, sidebar, body, skin = "black")
+dashboardPage(header, sidebar, body, skin = "yellow")
