@@ -1,9 +1,6 @@
 ## server.R ##
-library(shiny)
-library(ggplot2)
-library(plotly)
 
-setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+# setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
 
 shinyServer(function(input, output, session) {
     
@@ -67,16 +64,20 @@ shinyServer(function(input, output, session) {
     })
     
     
-    tweets_df <- reactive({
-      tweets <- searchTwitter(input$stringSearch, n = 25)
-      
-      twListToDF(tweets)
-    })
+    # tweets_df <- reactive({
+    #   tweets <- searchTwitter(input$stringSearch, n = 25)
+    #   
+    #   twListToDF(tweets)
+    # })
+    # 
+    # output$searchResults <- renderTable({
+    #   
+    #   tweets_df()[, c(1, 11, 12)]
+    #   
+    # })
     
-    output$searchResults <- renderTable({
-      
-      tweets_df()[, c(1, 11, 12)]
-      
+    output$table_stock_volumes <- renderDataTable({
+      data
     })
 
 })

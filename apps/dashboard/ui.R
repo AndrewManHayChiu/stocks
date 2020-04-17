@@ -3,9 +3,9 @@
 library(shinydashboard)
 library(plotly)
 
-width <- 175
+width <- 250
 
-header <- dashboardHeader(title = "",
+header <- dashboardHeader(title = "Stock Dashboard",
                           titleWidth = width)
 
 sidebar <- dashboardSidebar(
@@ -20,10 +20,14 @@ sidebar <- dashboardSidebar(
     width = width,
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"),
-                 badgeLabel = "new", badgeColor = "green"),
-        menuItem("Sentiments", tabName = "sentiments",
-                 icon = icon("laugh-squint"),
                  badgeLabel = "empty", badgeColor = "black"),
+        menuItem("Stock", tabName = "stock", icon = icon("chart-line"),
+                 badgeLabel = "test", badgeColor = "black"),
+        menuItem("High Vol Stocks", tabName = "hv_stocks", icon = icon("chart-bar"),
+                 badgeLabel = "new", badgeColor = "green"),
+        # menuItem("Sentiments", tabName = "sentiments",
+        #          icon = icon("laugh-squint"),
+        #          badgeLabel = "empty", badgeColor = "black"),
         menuItem("Research", tabName = "research",
                  icon = icon("user-graduate"), 
                  badgeLabel = "empty", badgeColor = "black"),
@@ -56,14 +60,18 @@ body <- dashboardBody(
                 
                 # Value boxes
                 fluidRow(
-                    valueBox(value = "6,493, (-2.21%)", subtitle = "ASX 200", icon = icon("chart-line"), color = "red"),
+                    valueBox(value = "X,XXX, (X.XX%)", subtitle = "ASX 200", icon = icon("chart-line"), color = "red"),
                     
-                    valueBox(value = "1 : 0.67", subtitle = "AUD/USD", icon = icon("dollar-sign"), color = "yellow"),
+                    valueBox(value = "1 : 0.XX", subtitle = "AUD/USD", icon = icon("dollar-sign"), color = "yellow"),
                     
-                    valueBox(value = "Normal", subtitle = "VIX Index", color = "green")
+                    valueBox(value = "X", subtitle = "VIX Index", color = "green")
                 ),
                 
-                h2("Dashboard"),
+                h2("Dashboard")
+                ),
+        
+        tabItem(tabName = "stock",
+                h2("Stock"),
                 selectInput(inputId = "select",
                             label = h4("Select a stock"), 
                             choices = code_list,
@@ -71,12 +79,19 @@ body <- dashboardBody(
                 plotlyOutput("example_plotly")
                 ),
         
-        tabItem(tabName = "sentiments",
-                h2("Sentiment"),
-                br(),
-                textInput("stringSearch", label = h3("Search twitter"), value = "ASX"),
-                hr(),
-                tableOutput("searchResults")),
+        tabItem(tabName = "hv_stocks",
+                
+                h2("Stock volumes"),
+                dataTableOutput("table_stock_volumes")
+                
+                ),
+        
+        # tabItem(tabName = "sentiments",
+        #         h2("Sentiment"),
+        #         br(),
+        #         textInput("stringSearch", label = h3("Search twitter"), value = "ASX"),
+        #         hr(),
+        #         tableOutput("searchResults")),
         
         tabItem(tabName = "research",
                 h2("Research"),

@@ -1,5 +1,6 @@
 library(quantmod)
 library(dplyr)
+library(readr)
 
 # Load data
 files <- list.files("data/daily")
@@ -34,7 +35,7 @@ for (i in 1:length(files)) {
       
       zoo::write.zoo(weekly_data, paste0("data/weekly/", ticker))
       zoo::write.zoo(monthly_data, paste0("data/monthly/", ticker))
-      readr::write_csv(stock_volumes, paste0("apps/high_volume_stocks/data/", ticker, ".csv"))
+      readr::write_csv(stock_volumes, paste0("apps/dashboard/data/", ticker, ".csv"))
     },
     
     error = function(e) {

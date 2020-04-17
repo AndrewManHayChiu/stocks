@@ -41,6 +41,9 @@ for (ticker in asx300$Code) {
     
   }, 
   
+  # TODO
+  warning = {},
+  
   error = function(e) {cat("ERROR :", conditionMessage(e), "\n")}
   )
 }

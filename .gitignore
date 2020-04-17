@@ -7,7 +7,7 @@
 
 # Data files
 /data
-/apps/high_volume_stocks/data
+/apps/dashboard/data
 
 # plots
 /outputs
