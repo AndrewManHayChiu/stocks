@@ -80,7 +80,17 @@ body <- dashboardBody(
                             selected = 1),
                 # plotlyOutput("example_plotly")
                 
-                plotOutput("quantmod_chart")
+                plotOutput("quantmod_chart"),
+                sliderInput(inputId = "date_slider",
+                            # min = as.Date("2019-01-01"),
+                            min = as.Date(Sys.Date() - 365),
+                            max = as.Date(Sys.Date()),
+                            value = c(as.Date(Sys.Date() - 365), as.Date(Sys.Date())),
+                            label = "Select date range",
+                            width = "100%"),
+                br(),
+                dataTableOutput("stock_data_table"),
+                downloadButton("download_data", "Download as CSV")
                 
                 ),
         

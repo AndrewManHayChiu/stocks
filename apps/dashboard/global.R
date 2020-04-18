@@ -23,7 +23,7 @@ source("functions.R")
 # Latest daily data
 stocks <- data.frame()
 for (file in list.files("data/daily")) {
-  temp <- read_csv(paste0("data/daily/", file))
+  temp <- read_csv(paste0("data/daily/", file), progress = FALSE)
   temp <- select(temp, ticker, timestamp, everything())
   colnames(temp)[3:8] <- c("Open", "High", "Low", "Close", "Volume", "Adjusted")
   stocks <- rbind(stocks, temp)
@@ -37,7 +37,7 @@ files <- list.files("data/volume")
 data <- data.frame()
 
 for (i in 1:length(files)) {
-  temp <- read_csv(paste0("data/volume/", files[i])) %>%
+  temp <- read_csv(paste0("data/volume/", files[i]), progress = FALSE) %>%
     mutate(ticker = strsplit(files[i], ".csv")[[1]])
   data <- rbind(data, temp)
 }

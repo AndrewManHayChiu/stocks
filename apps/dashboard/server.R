@@ -54,30 +54,54 @@ shinyServer(function(input, output, session) {
 
     })
     
-    # reactive data for selected stock
+
+# Stock page --------------------------------------------------------------
+    
+    # stock data
     stock_df <- reactive({
-      
-      stock_df <- stocks[stocks$ticker == input$selected_ticker, ]
-      
-      # convert to xts
-      xts(stock_df[, -c(1, 2)], order.by = stock_df$timestamp)
+      stocks[stocks$ticker == input$selected_ticker, ]
+    })
+    
+    # xts version of stock_df
+    stock_xts <- reactive({
+      xts(stock_df()[, -c(1, 2)], order.by = stock_df()$timestamp)
       
     })
     
     output$quantmod_chart <- renderPlot({
-      # stock_df <- stocks[stocks$ticker == input$selected_ticker, ]
-      # 
-      # stock_df <- xts(stock_df[, -c(1, 2)], order.by = stock_df$timestamp)
-      
-      chartSeries(stock_df(),
+      chartSeries(stock_xts(),
                   theme = "white",
                   TA = "addVo(); addSMA()")
     })
     
-    output$selected_ticker <- renderText({input$selected_ticker})
+    # output$selected_ticker <- renderText({
+    #   input$selected_ticker
+    # })
     
+    output$min_date <- renderText({
+      as.character(min(stock_df()$timestamp))
+    })
+    
+    output$stock_data_table <- renderDataTable({
+      stock_df()
+    })
+    
+    output$download_data <- downloadHandler(
+      filename = function() {
+        paste(input$selected_ticker, ".csv", sep = "")
+      },
+      content = function(file) {
+        write.csv(stock_df(), file, row.names = FALSE)
+      }
+    )
+
+# High Vol Stocks page -------------------------------------------------
+    
+    # Table for stock volume ratio
     output$table_stock_volumes <- renderDataTable({
       data
     })
+    
+    
 
 })
