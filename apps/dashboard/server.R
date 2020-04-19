@@ -59,7 +59,9 @@ shinyServer(function(input, output, session) {
     
     # stock data
     stock_df <- reactive({
-      stocks[stocks$ticker == input$selected_ticker, ]
+      stocks[stocks$ticker == input$selected_ticker &
+               stocks$timestamp > input$date_slider[1] &
+               stocks$timestamp < input$date_slider[2], ]
     })
     
     # xts version of stock_df
@@ -71,7 +73,8 @@ shinyServer(function(input, output, session) {
     output$quantmod_chart <- renderPlot({
       chartSeries(stock_xts(),
                   theme = "white",
-                  TA = "addVo(); addSMA()")
+                  TA = "addVo(); addSMA()",
+                  name = input$selected_ticker)
     })
     
     # output$selected_ticker <- renderText({

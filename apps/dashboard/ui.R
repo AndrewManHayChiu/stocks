@@ -20,17 +20,20 @@ sidebar <- dashboardSidebar(
     width = width,
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"),
-                 badgeLabel = "empty", badgeColor = "black"),
+                 badgeLabel = "dev", badgeColor = "black"
+                 ),
         
         menuItem("Stock", tabName = "stock", icon = icon("chart-line"),
                  badgeLabel = "new", badgeColor = "green"),
         
-        menuItem("High Vol Stocks", tabName = "hv_stocks", icon = icon("chart-bar"),
-                 badgeLabel = "new", badgeColor = "green"),
+        menuItem("High Vol Stocks", tabName = "hv_stocks", icon = icon("chart-bar")
+                 # badgeLabel = "new", badgeColor = "green"
+                 ),
         
         menuItem("Research", tabName = "research",
-                 icon = icon("user-graduate"), 
-                 badgeLabel = "empty", badgeColor = "black"),
+                 icon = icon("user-graduate")
+                 # badgeLabel = "empty", badgeColor = "black"
+                 ),
         
         menuItem("Disclaimer", tabName = "disclaimer",
                  icon = icon("question"))
@@ -81,16 +84,19 @@ body <- dashboardBody(
                 # plotlyOutput("example_plotly")
                 
                 plotOutput("quantmod_chart"),
+                br(),
                 sliderInput(inputId = "date_slider",
                             # min = as.Date("2019-01-01"),
                             min = as.Date(Sys.Date() - 365),
                             max = as.Date(Sys.Date()),
                             value = c(as.Date(Sys.Date() - 365), as.Date(Sys.Date())),
-                            label = "Select date range",
+                            label = "Limit the date range",
                             width = "100%"),
                 br(),
-                dataTableOutput("stock_data_table"),
-                downloadButton("download_data", "Download as CSV")
+                downloadButton("download_data", "Download data as CSV"),
+                br(),
+                br(),
+                dataTableOutput("stock_data_table")
                 
                 ),
         
