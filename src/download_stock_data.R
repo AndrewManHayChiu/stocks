@@ -22,6 +22,7 @@ for (ticker in asx300$Code) {
   tryCatch({
     
     # data <- get_alphavantage(stock = tickers[i], outputsize = "full")
+    ticker <- paste0(ticker, ".AX")
     
     df_stock <- data.frame(ticker = ticker, 
                            getSymbols(ticker,
@@ -48,6 +49,7 @@ for (ticker in asx300$Code) {
   )
 }
 
+# TODO Implement the quantmod version of this: getSYmbols.Alphavantage
 # Download Intraday data
 
 # for (i in 1) {
