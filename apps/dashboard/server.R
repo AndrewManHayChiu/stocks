@@ -81,6 +81,14 @@ shinyServer(function(input, output, session) {
     #   input$selected_ticker
     # })
     
+    output$company_name <- renderText({
+      as.character(asx300[asx300$Code == input$selected_ticker, ]$Company)
+    })
+    
+    output$company_sector <- renderText({
+      asx300[asx300$Code == input$selected_ticker, ]$Sector
+    })
+    
     output$min_date <- renderText({
       as.character(min(stock_df()$timestamp))
     })

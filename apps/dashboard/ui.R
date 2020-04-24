@@ -69,9 +69,7 @@ body <- dashboardBody(
                     valueBox(value = "1 : 0.XX", subtitle = "AUD/USD", icon = icon("dollar-sign"), color = "yellow"),
                     
                     valueBox(value = "X", subtitle = "VIX Index", color = "green")
-                ),
-                
-                h2("Dashboard")
+                )
                 ),
         
         tabItem(tabName = "stock",
@@ -81,23 +79,33 @@ body <- dashboardBody(
                             # choices = code_list,
                             choices = ticker_list,
                             selected = 1),
-                # plotlyOutput("example_plotly")
-                
-                plotOutput("quantmod_chart"),
+                h3(textOutput("company_name")),
+                p(textOutput("company_sector")),
                 br(),
-                sliderInput(inputId = "date_slider",
-                            # min = as.Date("2019-01-01"),
-                            min = as.Date(Sys.Date() - 365),
-                            max = as.Date(Sys.Date()),
-                            value = c(as.Date(Sys.Date() - 365), as.Date(Sys.Date())),
-                            label = "Limit the date range",
-                            width = "100%"),
-                br(),
-                downloadButton("download_data", "Download data as CSV"),
-                br(),
-                br(),
-                dataTableOutput("stock_data_table")
-                
+                tabsetPanel(
+                    tabPanel("Charts",
+                             plotOutput("quantmod_chart"),
+                             br(),
+                             sliderInput(inputId = "date_slider",
+                                         # min = as.Date("2019-01-01"),
+                                         min = as.Date(Sys.Date() - 365),
+                                         max = as.Date(Sys.Date()),
+                                         value = c(as.Date(Sys.Date() - 365), as.Date(Sys.Date())),
+                                         label = "Limit the date range",
+                                         width = "100%"),
+                             br(),
+                             downloadButton("download_data", "Download data as CSV"),
+                             fluidRow(
+                                 box(
+                                     title = "Data", witdh = "100%", status = "primary",
+                                     dataTableOutput("stock_data_table")
+                                     )
+                                 )
+                             ),
+                    
+                    tabPanel("Trade History",
+                             p("IN DEVELOPMENT"))
+                )
                 ),
         
         tabItem(tabName = "hv_stocks",

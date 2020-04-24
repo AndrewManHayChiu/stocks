@@ -15,10 +15,8 @@ library(plotly)
 
 source("functions.R")
 
-# TODO: migrate this to the daily data code below
-# df <- read.csv("stocks.csv", stringsAsFactors = F)
-# df$timestamp <- lubridate::ymd(df$timestamp)
-# code_list <- as.list(unique(df$code))
+asx300 <- read.csv("data/20200401-asx300.csv", stringsAsFactors = FALSE, skip = 1)
+asx300$Code <- paste0(asx300$Code, ".AX")
 
 # Latest daily data
 stocks <- data.frame()
